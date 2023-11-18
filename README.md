@@ -1,11 +1,11 @@
 # task-manager-app
-Task Manager App
+<b>Task Manager App</b>
 
-Overview:
+<b>Overview:</b>
 
 Task Manager App is a full-stack web application designed to help users manage their tasks efficiently. This application provides a seamless and user-friendly interface for adding, updating, and deleting tasks. It incorporates a clean and responsive design, making it accessible across various devices.
 
-Features:
+<b>Features:</b>
 
 1. Task Management
 
@@ -24,14 +24,14 @@ Features:
 - Attractive Design: The application features a visually appealing design that enhances the user experience.
 - Responsive Layout: Task Manager App is responsive, ensuring a seamless experience on both desktop and mobile devices.
 
-Technologies Used:
+<b>Technologies Used:</b>
 
 - Frontend: React
 - Backend: Node.js, Express.js
 - Database: PostgreSQL
 - Styling: CSS
 
-Developer's Notes:
+<b>Developer's Notes:</b>
 
 This project serves as an excellent example of a full-stack web application, showcasing proficiency in:
 
@@ -39,11 +39,11 @@ This project serves as an excellent example of a full-stack web application, sho
 - Backend Development: Node.js, Express.js, and PostgreSQL for database interactions.
 - API Integration: Axios is used for making asynchronous HTTP requests.
   
-Future Enhancements:
+<b>Future Enhancements:</b>
 
 - User Authentication: Implement user authentication to enable task management on a per-user basis.
 - Task Prioritization: Allow users to prioritize tasks to better manage their workload.
 - Task Categories: Introduce categories or labels to help users organize tasks more effectively.
 
-See the project code here:  https://github.com/bvhadra/task-manager-app/tree/master
+<b>See the project code here:</b>  https://github.com/bvhadra/task-manager-app/tree/master
 
