@@ -38,10 +38,12 @@ This project serves as an excellent example of a full-stack web application, sho
 - Frontend Development: React, state management, and component-based architecture.
 - Backend Development: Node.js, Express.js, and PostgreSQL for database interactions.
 - API Integration: Axios is used for making asynchronous HTTP requests.
-- 
+  
 Future Enhancements:
 
 - User Authentication: Implement user authentication to enable task management on a per-user basis.
 - Task Prioritization: Allow users to prioritize tasks to better manage their workload.
 - Task Categories: Introduce categories or labels to help users organize tasks more effectively.
+
+See the project code here:  https://github.com/bvhadra/task-manager-app/tree/master
 
