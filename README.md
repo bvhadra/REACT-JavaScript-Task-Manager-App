@@ -1,4 +1,4 @@
-# Task Manager App
+# REACT Task Manager App
 <b>Task Manager App</b>
 
 <b>Overview:</b>
@@ -45,5 +45,5 @@ This project serves as an excellent example of a full-stack web application, sho
 - Task Prioritization: Allow users to prioritize tasks to better manage their workload.
 - Task Categories: Introduce categories or labels to help users organize tasks more effectively.
 
-<b>See the project code here:</b>  https://github.com/bvhadra/task-manager-app/tree/master
+<b>See the project code here:</b>  https://github.com/bvhadra/task-manager-app/tree/main
 
