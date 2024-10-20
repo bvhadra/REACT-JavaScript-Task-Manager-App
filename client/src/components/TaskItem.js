@@ -1,28 +1,42 @@
-// Import the React library
 import React from 'react';
+import '../App.css';
 
-// Define a functional component called TaskItem
-function TaskItem({ task, onDeleteTask, onToggleTaskStatus }) {
+function TaskItem({ task, deleteTask, startEditing, toggleCompletion, editingTaskId, editingText, setEditingText, saveTask, cancelEditing }) {
+  const isEditing = editingTaskId === task.id;
+
   return (
     <li className={`task-item ${task.completed ? 'completed' : ''}`}>
-      {/* Render a list item with a class 'task-item' and 'completed' if the task is completed */}
       <div className="task-info">
-        {/* Create a div for task information */}
-        <input
-          type="checkbox"
-          checked={task.completed}
-          onChange={() => onToggleTaskStatus(task.id, task.completed)}
+        <input 
+          type="checkbox" 
+          checked={task.completed} 
+          onChange={() => toggleCompletion(task.id)} 
         />
-        {/* Create a checkbox input with checked status and an onChange event */}
-        <span>{task.text}</span>
-        {/* Display the task text */}
+        {isEditing ? (
+          <input 
+            type="text" 
+            value={editingText} 
+            onChange={(e) => setEditingText(e.target.value)} 
+          />
+        ) : (
+          <span className="task-text">{task.text}</span>
+        )}
       </div>
-      <button onClick={() => onDeleteTask(task.id)}>Delete</button>
-      {/* Create a 'Delete' button with an onClick event */}
+      <div className="task-buttons">
+        {isEditing ? (
+          <>
+            <button onClick={saveTask}>Save</button>
+            <button onClick={cancelEditing}>Cancel</button>
+          </>
+        ) : (
+          <>
+            <button onClick={() => startEditing(task)}>Edit</button>
+            <button onClick={() => deleteTask(task.id)}>Delete</button>
+          </>
+        )}
+      </div>
     </li>
   );
 }
 
-// Export the TaskItem component to be used in other parts of the application
 export default TaskItem;
-

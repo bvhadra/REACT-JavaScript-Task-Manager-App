@@ -1,26 +1,30 @@
-// Import React library to create a React component
+// TaskFilter.js
 import React from 'react';
+import '../App.css';
 
-// Define a functional component called TaskFilter
-function TaskFilter({ currentFilter, onChangeFilter }) {
-  // Define an array of filter options
-  const filters = ['All', 'Active', 'Completed'];
-
-  // Render a div containing buttons for each filter option
+const TaskFilter = ({ currentFilter, onChangeFilter }) => {
   return (
     <div className="task-filter">
-      {filters.map((filter) => (
-        <button
-          key={filter}
-          className={currentFilter === filter ? 'active' : ''} // Apply 'active' class if the current filter matches
-          onClick={() => onChangeFilter(filter)} // Trigger the onChangeFilter function when a button is clicked
-        >
-          {filter} {/* Display the filter option text */}
-        </button>
-      ))}
+      <button
+        className={currentFilter === 'All' ? 'active' : ''}
+        onClick={() => onChangeFilter('All')}
+      >
+        All
+      </button>
+      <button
+        className={currentFilter === 'Active' ? 'active' : ''}
+        onClick={() => onChangeFilter('Active')}
+      >
+        Active
+      </button>
+      <button
+        className={currentFilter === 'Completed' ? 'active' : ''}
+        onClick={() => onChangeFilter('Completed')}
+      >
+        Completed
+      </button>
     </div>
   );
-}
+};
 
-// Export the TaskFilter component to be used in other parts of the application
 export default TaskFilter;

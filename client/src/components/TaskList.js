@@ -1,25 +1,27 @@
-// Import the React library and the TaskItem component
+// TaskList.js
 import React from 'react';
 import TaskItem from './TaskItem';
+import '../App.css';
 
-// Define a functional component called TaskList
-function TaskList({ tasks, onToggleTaskStatus, onDeleteTask }) {
+function TaskList({ tasks, deleteTask, startEditing, toggleCompletion, editingTaskId, setEditingText, editingText, saveTask, cancelEditing }) {
   return (
     <ul className="task-list">
-      {/* Render an unordered list with a class 'task-list' */}
       {tasks.map((task) => (
-        // Map through the 'tasks' array and create a TaskItem component for each task
         <TaskItem
           key={task.id}
           task={task}
-          onToggleTaskStatus={onToggleTaskStatus}
-          onDeleteTask={onDeleteTask}
+          deleteTask={deleteTask}
+          startEditing={startEditing}
+          toggleCompletion={toggleCompletion}
+          editingTaskId={editingTaskId}
+          editingText={editingText}
+          setEditingText={setEditingText}
+          saveTask={saveTask}
+          cancelEditing={cancelEditing}
         />
       ))}
     </ul>
   );
 }
 
-// Export the TaskList component to be used in other parts of the application
 export default TaskList;
-

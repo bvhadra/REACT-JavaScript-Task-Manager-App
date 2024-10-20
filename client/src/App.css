@@ -1,21 +1,59 @@
-/* App.css */
-
+/* App Container */
 .App {
   font-family: Arial, sans-serif;
-  max-width: 400px;
+  max-width: 500px;
   margin: 0 auto;
   padding: 20px;
   background-color: #f4f4f4;
   border-radius: 5px;
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+  position: relative; /* Required for relative positioning */
 }
 
+/* Content Section */
+.content {
+  padding-top: 100px;  /* To account for fixed header */
+  padding-bottom: 70px; /* To account for fixed footer */
+}
+
+/* Header Styles */
+.app-header {
+  background-color: #007bff;
+  color: white;
+  height: 80px;
+  width: 100vw; /* Full width of the viewport */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 10;
+}
+
+/* Footer Styles */
+.app-footer {
+  background-color: #007bff;
+  color: white;
+  height: 50px;
+  width: 100vw; /* Full width of the viewport */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  z-index: 10;
+}
+
+/* Header */
 .header {
   text-align: center;
   margin-bottom: 20px;
   color: #007bff;
 }
 
+/* Task Form */
 .task-form {
   background-color: #fff;
   padding: 10px;
@@ -31,49 +69,53 @@
 
 .task-form input[type="text"] {
   flex: 1;
-  padding: 8px;
-  border: 1px solid #ccc;
+  padding: 10px; /* Increased padding for a larger input */
+  border: 2px solid #007bff; /* Blue border color */
   border-radius: 3px;
+  font-size: 16px; /* Larger font size for better readability */
 }
 
 .task-form button[type="submit"] {
-  padding: 8px 15px;
-  background-color: #007bff;
+  padding: 10px 15px; /* Increased padding for a larger button */
+  background-color: #007bff; /* Blue background color */
   color: #fff;
   border: none;
   border-radius: 3px;
   cursor: pointer;
+  font-size: 16px; /* Larger font size for better readability */
 }
 
 /* Task Filter buttons */
 .task-filter {
   display: flex;
-  justify-content: space-between;
+  justify-content: left;
   margin-bottom: 20px;
 }
 
 .task-filter button {
   padding: 5px 10px;
-  background-color: transparent;
-  border: 1px solid #ccc;
+  background-color: #ccc;
+  border: 1px solid #000;
   border-radius: 3px;
   cursor: pointer;
+  margin-right: 20px;
 }
 
 .task-filter button.active {
-  background-color: #007bff;
-  color: #fff;
+  background-color: #008000; /* Green background color for active filter */
+  color: #fff; /* White text for better contrast */
 }
 
 /* Task List */
 .task-list {
   list-style-type: none;
-  padding: 0;
+  padding: 2px;
+  text-align: left;
 }
 
 .task-item {
   display: flex;
-  justify-content: space-between;
+  justify-content: space-between; /* Aligns items in the container */
   align-items: center;
   background-color: #fff;
   padding: 10px;
@@ -82,40 +124,61 @@
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
+/* Flexbox for checkbox and task text */
+.task-info {
+  display: flex;
+  align-items: center;
+  flex: 1; /* Makes the task-info section grow to take up available space */
+}
+
 /* Larger checkboxes */
 .task-info input[type="checkbox"] {
-  margin-right: 10px;
-  transform: scale(2); /* Make checkboxes larger */
+  margin-right: 15px;
+  transform: scale(2); /* Scaled checkbox */
+}
+
+/* Align task text next to checkbox */
+.task-text {
+  flex-grow: 1;
+  text-align: left; /* Aligns the task text to the left */
 }
 
 /* Apply line-through to task text when checkbox is checked */
-.task-item.completed .task-info span {
+.task-item.completed .task-text {
   text-decoration: line-through;
 }
 
-/* Remove line-through from the delete button when checkboxes are selected */
-.task-item.completed .task-info input[type="checkbox"] + button {
-  text-decoration: none;
+/* Button container */
+.task-buttons {
+  display: flex; /* Flexbox for buttons alignment */
+  gap: 5px; /* Space between buttons */
 }
 
-/* Delete button style */
-.task-item button {
-  padding: 5px 10px;
-  background-color: #ff4444;
+.task-buttons button {
+  padding: 8px 12px;
+  background-color: #ff4444; /* Red background color for Delete button */
   color: #fff;
   border: none;
   border-radius: 3px;
   cursor: pointer;
 }
 
-/* Style for toggle button */
-.task-item .toggle-button {
-  background-color: #008000;
+/* Button for Save */
+.task-buttons button:nth-child(1) {
+  background-color: #007bff; /* Blue for Save and Edit buttons */
 }
 
-/* Add margin between buttons */
-.task-item button + button {
-  margin-left: 5px;
+/* Button for Cancel */
+.task-buttons button:nth-child(2) {
+  background-color: #ff9800; /* Orange for Cancel button */
+}
+
+/* Input style for editing */
+.task-item input[type="text"] {
+  flex: 1;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
 }
 
 /* Responsive styles */
