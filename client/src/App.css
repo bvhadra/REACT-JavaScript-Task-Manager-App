@@ -181,9 +181,62 @@
   border-radius: 3px;
 }
 
-/* Responsive styles */
+/* Mobile Styles (max-width: 600px) */
 @media (max-width: 600px) {
   .App {
     width: 90%;
+  }
+
+  .task-form form {
+    flex-direction: column;
+  }
+
+  .task-form input[type="text"],
+  .task-form button[type="submit"] {
+    width: 90%;
+    font-size: 14px;
+  }
+
+  .task-buttons {
+    flex-direction: column;
+  }
+
+  .task-buttons button {
+    width: 100%;
+    margin-bottom: 5px;
+  }
+}
+
+/* Tablet Styles (min-width: 601px) and (max-width: 900px) */
+@media (min-width: 601px) and (max-width: 900px) {
+  .App {
+    max-width: 80%;
+    padding: 15px;
+  }
+
+  .task-form input[type="text"],
+  .task-form button[type="submit"] {
+    font-size: 15px;
+  }
+  
+  .task-buttons button {
+    font-size: 15px;
+  }
+}
+
+/* Laptop and Large Screens (min-width: 901px) */
+@media (min-width: 901px) {
+  .App {
+    max-width: 40%;
+    padding: 30px;
+  }
+
+  .task-form input[type="text"],
+  .task-form button[type="submit"] {
+    font-size: 18px;
+  }
+  
+  .task-buttons button {
+    font-size: 16px;
   }
 }
