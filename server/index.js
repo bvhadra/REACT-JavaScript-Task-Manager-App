@@ -1,13 +1,13 @@
-const express = require('express'); // Import the Express framework
-const bodyParser = require('body-parser'); // Middleware for parsing JSON request bodies
-const cors = require('cors'); // Middleware for Cross-Origin Resource Sharing
-const { Pool } = require('pg'); // PostgreSQL library
-require('dotenv').config(); // Import dotenv to use environment variables
+const express = require('express');
+const bodyParser = require('body-parser');
+const cors = require('cors');
+const { Pool } = require('pg');
+require('dotenv').config();
+const path = require('path'); // Add this line
 
-const app = express(); // Create an Express application
-const port = process.env.PORT || 5000; // Define the port for the server to run on
+const app = express();
+const port = process.env.PORT || 5000;
 
-// PostgreSQL connection configuration
 const pool = new Pool({
   user: process.env.DB_USER,
   password: process.env.DB_PASSWORD,
@@ -16,26 +16,24 @@ const pool = new Pool({
   database: process.env.DB_NAME,
 });
 
-// Middleware
-app.use(bodyParser.json()); // Use JSON parsing middleware
-app.use(cors()); // Use CORS to allow cross-origin requests
+app.use(bodyParser.json());
+app.use(cors());
 
-// API route to fetch all tasks
+// API routes
 app.get('/api/tasks', async (req, res) => {
   try {
-    const { rows } = await pool.query('SELECT * FROM tasks ORDER BY id'); // Fetch tasks ordered by ID
-    res.json(rows); // Send the fetched tasks as JSON
+    const { rows } = await pool.query('SELECT * FROM tasks ORDER BY id');
+    res.json(rows);
   } catch (error) {
     console.error('Error fetching tasks:', error);
-    res.status(500).json({ error: 'Internal server error' }); // Handle errors
+    res.status(500).json({ error: 'Internal server error' });
   }
 });
 
-// API route to add a new task
 app.post('/api/tasks', async (req, res) => {
   const { text } = req.body;
   if (!text || text.trim() === '') {
-    return res.status(400).json({ error: 'Task text is required' }); // Validate task text
+    return res.status(400).json({ error: 'Task text is required' });
   }
 
   try {
@@ -43,14 +41,13 @@ app.post('/api/tasks', async (req, res) => {
       'INSERT INTO tasks (text, completed) VALUES ($1, false) RETURNING *',
       [text]
     );
-    res.json(rows[0]); // Return the newly created task
+    res.json(rows[0]);
   } catch (error) {
     console.error('Error adding task:', error);
     res.status(500).json({ error: 'Internal server error' });
   }
 });
 
-// API route to update a task (edit)
 app.put('/api/tasks/:id', async (req, res) => {
   const taskId = req.params.id;
   const { text, completed } = req.body;
@@ -69,14 +66,13 @@ app.put('/api/tasks/:id', async (req, res) => {
       return res.status(404).json({ error: 'Task not found' });
     }
 
-    res.json(rows[0]); // Return the updated task
+    res.json(rows[0]);
   } catch (error) {
     console.error('Error updating task:', error);
     res.status(500).json({ error: 'Internal server error' });
   }
 });
 
-// API route to delete a task
 app.delete('/api/tasks/:id', async (req, res) => {
   const taskId = req.params.id;
 
@@ -94,7 +90,15 @@ app.delete('/api/tasks/:id', async (req, res) => {
   }
 });
 
-// Start the server
+// Serve static files from the React app in production
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static(path.join(__dirname, '../client/build')));
+  
+  app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, '../client/build', 'index.html'));
+  });
+}
+
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });
