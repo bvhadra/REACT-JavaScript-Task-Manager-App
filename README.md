@@ -1,7 +1,7 @@
 # REACT Task Manager App
-<b>Task Manager App</b>
+<h2>Task Manager App</h2>
 
-<a href="https://react-javascript-task-manager-8032db552129.herokuapp.com">https://react-javascript-task-manager-8032db552129.herokuapp.com</a>
+<h3><a href="https://react-javascript-task-manager-8032db552129.herokuapp.com">https://react-javascript-task-manager-8032db552129.herokuapp.com</a></h3>
 
 <b>Overview:</b>
 
