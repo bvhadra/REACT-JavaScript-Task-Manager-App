@@ -20,7 +20,7 @@ app.use(bodyParser.json());
 
 // Update CORS configuration
 app.use(cors({
-  origin: 'https://react-javascript-task-manager-8032db552129.herokuapp.com',
+  origin: process.env.FRONTEND_URL || 'https://react-javascript-task-manager-8032db552129.herokuapp.com',
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   allowedHeaders: ['Content-Type', 'Authorization']
 }));
