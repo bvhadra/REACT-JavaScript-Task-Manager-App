@@ -4,9 +4,9 @@
 
 <b>Overview:</b>
 
-<h4>Task Manager App is a full-stack web application designed to help users manage their tasks efficiently. This application provides a seamless and user-friendly interface for adding, updating, and deleting tasks. It incorporates a clean and responsive design, making it accessible across various devices.</h4>
+Task Manager App is a full-stack web application designed to help users manage their tasks efficiently. This application provides a seamless and user-friendly interface for adding, updating, and deleting tasks. It incorporates a clean and responsive design, making it accessible across various devices.
 
-<h3>Features:</h3>
+<b>Features:</b>
 
 1. Task Management
 
@@ -47,5 +47,7 @@ This project serves as an excellent example of a full-stack web application, sho
 - Task Prioritization: Allow users to prioritize tasks to better manage their workload.
 - Task Categories: Introduce categories or labels to help users organize tasks more effectively.
 
-<b>See the project code here:</b>  https://github.com/bvhadra/task-manager-app/tree/main
+<h3>Try the app here: <a href="https://react-javascript-task-manager-8032db552129.herokuapp.com">https://react-javascript-task-manager-8032db552129.herokuapp.com</a></h3>
+
+<h3>See the project code here: https://github.com/bvhadra/task-manager-app/tree/main</h3>
 
