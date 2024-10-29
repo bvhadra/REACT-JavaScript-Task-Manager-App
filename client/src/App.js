@@ -10,8 +10,6 @@ import TaskFilter from './components/TaskFilter';
 // Define the API base URL
 const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'https://react-javascript-task-manager-8032db552129.herokuapp.com/api';
 
-//const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'https://react-javascript-task-manager.herokuapp.com/api';
-
 function App() {
   const [tasks, setTasks] = useState([]);
   const [taskText, setTaskText] = useState('');
