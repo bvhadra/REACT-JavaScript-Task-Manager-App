@@ -3,21 +3,27 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const { Pool } = require('pg');
 require('dotenv').config();
-const path = require('path'); // Add this line
+const path = require('path');
 
 const app = express();
 const port = process.env.PORT || 5000;
 
+// Update the pool configuration to use the DATABASE_URL for Heroku
 const pool = new Pool({
-  user: process.env.DB_USER,
-  password: process.env.DB_PASSWORD,
-  host: process.env.DB_HOST,
-  port: process.env.DB_PORT || 5432,
-  database: process.env.DB_NAME,
+  connectionString: process.env.DATABASE_URL,
+  ssl: {
+    rejectUnauthorized: false
+  }
 });
 
 app.use(bodyParser.json());
-app.use(cors());
+
+// Update CORS configuration
+app.use(cors({
+  origin: 'https://react-javascript-task-manager-8032db552129.herokuapp.com',
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  allowedHeaders: ['Content-Type', 'Authorization']
+}));
 
 // API routes
 app.get('/api/tasks', async (req, res) => {
