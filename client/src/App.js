@@ -7,6 +7,9 @@ import TaskForm from './components/TaskForm';
 import TaskList from './components/TaskList';
 import TaskFilter from './components/TaskFilter';
 
+// Define the API base URL
+const API_BASE_URL = 'https://react-javascript-task-manager-8032db552129.herokuapp.com/api';
+
 function App() {
   const [tasks, setTasks] = useState([]);
   const [taskText, setTaskText] = useState('');
@@ -18,7 +21,7 @@ function App() {
   useEffect(() => {
     const fetchTasks = async () => {
       try {
-        const response = await axios.get('http://localhost:5000/api/tasks');
+        const response = await axios.get(`${API_BASE_URL}/tasks`);
         setTasks(response.data);
       } catch (error) {
         console.error('Error fetching tasks:', error);
@@ -31,7 +34,7 @@ function App() {
   const addTask = async () => {
     if (!taskText.trim()) return;
     try {
-      const response = await axios.post('http://localhost:5000/api/tasks', { text: taskText });
+      const response = await axios.post(`${API_BASE_URL}/tasks`, { text: taskText });
       setTasks([...tasks, response.data]);
       setTaskText('');
     } catch (error) {
@@ -42,7 +45,7 @@ function App() {
   // Delete a task
   const deleteTask = async (id) => {
     try {
-      await axios.delete(`http://localhost:5000/api/tasks/${id}`);
+      await axios.delete(`${API_BASE_URL}/tasks/${id}`);
       setTasks(tasks.filter((task) => task.id !== id));
     } catch (error) {
       console.error('Error deleting task:', error);
@@ -52,7 +55,7 @@ function App() {
   // Start editing a task
   const startEditing = (task) => {
     setEditingTaskId(task.id);
-    setEditingText(task.text); // Set the current task text in state for editing
+    setEditingText(task.text);
   };
 
   // Save the edited task
@@ -60,12 +63,12 @@ function App() {
     if (!editingText.trim()) return;
 
     try {
-      const response = await axios.put(`http://localhost:5000/api/tasks/${editingTaskId}`, {
+      const response = await axios.put(`${API_BASE_URL}/tasks/${editingTaskId}`, {
         text: editingText,
         completed: tasks.find(task => task.id === editingTaskId).completed,
       });
       setTasks(tasks.map((task) => (task.id === response.data.id ? response.data : task)));
-      cancelEditing(); // Reset editing state after saving
+      cancelEditing();
     } catch (error) {
       console.error('Error saving task:', error);
     }
@@ -73,8 +76,8 @@ function App() {
 
   // Cancel editing a task
   const cancelEditing = () => {
-    setEditingTaskId(null);  // Exit editing mode
-    setEditingText('');      // Clear editing text
+    setEditingTaskId(null);
+    setEditingText('');
   };
 
   // Toggle completion status of a task
@@ -83,7 +86,7 @@ function App() {
     const updatedTask = { ...taskToUpdate, completed: !taskToUpdate.completed };
 
     try {
-      const response = await axios.put(`http://localhost:5000/api/tasks/${taskId}`, updatedTask);
+      const response = await axios.put(`${API_BASE_URL}/tasks/${taskId}`, updatedTask);
       setTasks(tasks.map((task) => (task.id === taskId ? response.data : task)));
     } catch (error) {
       console.error('Error toggling task completion:', error);
@@ -116,7 +119,7 @@ function App() {
           setEditingText={setEditingText} 
           editingText={editingText} 
           saveTask={saveTask} 
-          cancelEditing={cancelEditing}  // Pass cancelEditing function
+          cancelEditing={cancelEditing}
         />
       </div>
       <Footer />
