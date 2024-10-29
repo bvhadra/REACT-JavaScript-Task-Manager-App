@@ -16,6 +16,25 @@ const pool = new Pool({
   }
 });
 
+// Database initialization function
+async function initializeDatabase() {
+  try {
+    await pool.query(`
+      CREATE TABLE IF NOT EXISTS tasks (
+        id SERIAL PRIMARY KEY,
+        text VARCHAR(255) NOT NULL,
+        completed BOOLEAN DEFAULT false
+      )
+    `);
+    console.log('Database initialized successfully');
+  } catch (error) {
+    console.error('Error initializing database:', error);
+  }
+}
+
+// Call the initialization function
+initializeDatabase();
+
 app.use(bodyParser.json());
 
 // Update CORS configuration
@@ -32,7 +51,7 @@ app.get('/api/tasks', async (req, res) => {
     res.json(rows);
   } catch (error) {
     console.error('Error fetching tasks:', error);
-    res.status(500).json({ error: 'Internal server error' });
+    res.status(500).json({ error: 'Internal server error', details: error.message });
   }
 });
 
@@ -50,7 +69,7 @@ app.post('/api/tasks', async (req, res) => {
     res.json(rows[0]);
   } catch (error) {
     console.error('Error adding task:', error);
-    res.status(500).json({ error: 'Internal server error' });
+    res.status(500).json({ error: 'Internal server error', details: error.message });
   }
 });
 
@@ -75,7 +94,7 @@ app.put('/api/tasks/:id', async (req, res) => {
     res.json(rows[0]);
   } catch (error) {
     console.error('Error updating task:', error);
-    res.status(500).json({ error: 'Internal server error' });
+    res.status(500).json({ error: 'Internal server error', details: error.message });
   }
 });
 
@@ -92,7 +111,18 @@ app.delete('/api/tasks/:id', async (req, res) => {
     res.json({ message: 'Task deleted successfully' });
   } catch (error) {
     console.error('Error deleting task:', error);
-    res.status(500).json({ error: 'Internal server error' });
+    res.status(500).json({ error: 'Internal server error', details: error.message });
+  }
+});
+
+// Health check endpoint
+app.get('/health', async (req, res) => {
+  try {
+    await pool.query('SELECT 1');
+    res.status(200).json({ status: 'healthy' });
+  } catch (error) {
+    console.error('Health check failed:', error);
+    res.status(500).json({ status: 'unhealthy', details: error.message });
   }
 });
 
