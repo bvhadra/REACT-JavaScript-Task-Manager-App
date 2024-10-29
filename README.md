@@ -49,5 +49,4 @@ This project serves as an excellent example of a full-stack web application, sho
 
 <h3>Try the app here: <a href="https://react-javascript-task-manager-8032db552129.herokuapp.com">https://react-javascript-task-manager-8032db552129.herokuapp.com</a></h3>
 
-<h3>See the project code here: https://github.com/bvhadra/task-manager-app/tree/main</h3>
 
