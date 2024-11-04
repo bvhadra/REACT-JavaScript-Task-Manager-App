@@ -8,22 +8,19 @@ const path = require('path');
 const app = express();
 const port = process.env.PORT || 5000;
 
-// Update the pool configuration to use the DATABASE_URL for Heroku
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
-  ssl: {
-    rejectUnauthorized: false
-  }
+  ssl: { rejectUnauthorized: false }
 });
 
-// Database initialization function
 async function initializeDatabase() {
   try {
     await pool.query(`
       CREATE TABLE IF NOT EXISTS tasks (
         id SERIAL PRIMARY KEY,
         text VARCHAR(255) NOT NULL,
-        completed BOOLEAN DEFAULT false
+        completed BOOLEAN DEFAULT false,
+        priority VARCHAR(10) DEFAULT 'Medium'
       )
     `);
     console.log('Database initialized successfully');
@@ -32,19 +29,15 @@ async function initializeDatabase() {
   }
 }
 
-// Call the initialization function
 initializeDatabase();
 
 app.use(bodyParser.json());
-
-// Update CORS configuration
 app.use(cors({
   origin: process.env.FRONTEND_URL || 'https://react-javascript-task-manager-8032db552129.herokuapp.com',
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   allowedHeaders: ['Content-Type', 'Authorization']
 }));
 
-// API routes
 app.get('/api/tasks', async (req, res) => {
   try {
     const { rows } = await pool.query('SELECT * FROM tasks ORDER BY id');
@@ -56,15 +49,14 @@ app.get('/api/tasks', async (req, res) => {
 });
 
 app.post('/api/tasks', async (req, res) => {
-  const { text } = req.body;
+  const { text, priority } = req.body;
   if (!text || text.trim() === '') {
     return res.status(400).json({ error: 'Task text is required' });
   }
-
   try {
     const { rows } = await pool.query(
-      'INSERT INTO tasks (text, completed) VALUES ($1, false) RETURNING *',
-      [text]
+      'INSERT INTO tasks (text, completed, priority) VALUES ($1, false, $2) RETURNING *',
+      [text, priority || 'Medium']
     );
     res.json(rows[0]);
   } catch (error) {
@@ -75,22 +67,18 @@ app.post('/api/tasks', async (req, res) => {
 
 app.put('/api/tasks/:id', async (req, res) => {
   const taskId = req.params.id;
-  const { text, completed } = req.body;
-
+  const { text, completed, priority } = req.body;
   if (typeof completed !== 'boolean' || !text) {
     return res.status(400).json({ error: 'Invalid input' });
   }
-
   try {
     const { rows } = await pool.query(
-      'UPDATE tasks SET text = $1, completed = $2 WHERE id = $3 RETURNING *',
-      [text, completed, taskId]
+      'UPDATE tasks SET text = $1, completed = $2, priority = $3 WHERE id = $4 RETURNING *',
+      [text, completed, priority || 'Medium', taskId]
     );
-
     if (rows.length === 0) {
       return res.status(404).json({ error: 'Task not found' });
     }
-
     res.json(rows[0]);
   } catch (error) {
     console.error('Error updating task:', error);
@@ -100,14 +88,11 @@ app.put('/api/tasks/:id', async (req, res) => {
 
 app.delete('/api/tasks/:id', async (req, res) => {
   const taskId = req.params.id;
-
   try {
     const result = await pool.query('DELETE FROM tasks WHERE id = $1 RETURNING *', [taskId]);
-
     if (result.rowCount === 0) {
       return res.status(404).json({ error: 'Task not found' });
     }
-
     res.json({ message: 'Task deleted successfully' });
   } catch (error) {
     console.error('Error deleting task:', error);
@@ -115,7 +100,6 @@ app.delete('/api/tasks/:id', async (req, res) => {
   }
 });
 
-// Health check endpoint
 app.get('/health', async (req, res) => {
   try {
     await pool.query('SELECT 1');
@@ -126,10 +110,8 @@ app.get('/health', async (req, res) => {
   }
 });
 
-// Serve static files from the React app in production
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static(path.join(__dirname, '../client/build')));
-  
   app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, '../client/build', 'index.html'));
   });

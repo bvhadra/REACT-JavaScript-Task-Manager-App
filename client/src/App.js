@@ -7,19 +7,19 @@ import TaskForm from './components/TaskForm';
 import TaskList from './components/TaskList';
 import TaskFilter from './components/TaskFilter';
 
-// Define the API base URL
 const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'https://react-javascript-task-manager-8032db552129.herokuapp.com/api';
 
 function App() {
   const [tasks, setTasks] = useState([]);
   const [taskText, setTaskText] = useState('');
+  const [taskPriority, setTaskPriority] = useState('Medium');
   const [editingTaskId, setEditingTaskId] = useState(null);
   const [editingText, setEditingText] = useState('');
+  const [editingPriority, setEditingPriority] = useState('Medium');
   const [filter, setFilter] = useState('All');
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  // Fetch tasks on component mount
   useEffect(() => {
     const fetchTasks = async () => {
       setIsLoading(true);
@@ -37,15 +37,15 @@ function App() {
     fetchTasks();
   }, []);
 
-  // Add a new task
   const addTask = async () => {
     if (!taskText.trim()) return;
     setIsLoading(true);
     setError(null);
     try {
-      const response = await axios.post(`${API_BASE_URL}/tasks`, { text: taskText });
+      const response = await axios.post(`${API_BASE_URL}/tasks`, { text: taskText, priority: taskPriority });
       setTasks([...tasks, response.data]);
       setTaskText('');
+      setTaskPriority('Medium');
     } catch (error) {
       console.error('Error adding task:', error);
       setError('Failed to add task. Please try again.');
@@ -54,7 +54,6 @@ function App() {
     }
   };
 
-  // Delete a task
   const deleteTask = async (id) => {
     setIsLoading(true);
     setError(null);
@@ -69,13 +68,12 @@ function App() {
     }
   };
 
-  // Start editing a task
   const startEditing = (task) => {
     setEditingTaskId(task.id);
     setEditingText(task.text);
+    setEditingPriority(task.priority);
   };
 
-  // Save the edited task
   const saveTask = async () => {
     if (!editingText.trim()) return;
     setIsLoading(true);
@@ -84,6 +82,7 @@ function App() {
       const response = await axios.put(`${API_BASE_URL}/tasks/${editingTaskId}`, {
         text: editingText,
         completed: tasks.find(task => task.id === editingTaskId).completed,
+        priority: editingPriority
       });
       setTasks(tasks.map((task) => (task.id === response.data.id ? response.data : task)));
       cancelEditing();
@@ -95,13 +94,12 @@ function App() {
     }
   };
 
-  // Cancel editing a task
   const cancelEditing = () => {
     setEditingTaskId(null);
     setEditingText('');
+    setEditingPriority('Medium');
   };
 
-  // Toggle completion status of a task
   const toggleCompletion = async (taskId) => {
     const taskToUpdate = tasks.find((task) => task.id === taskId);
     const updatedTask = { ...taskToUpdate, completed: !taskToUpdate.completed };
@@ -118,7 +116,6 @@ function App() {
     }
   };
 
-  // Filter tasks based on the selected filter
   const filteredTasks = tasks.filter((task) => {
     if (filter === 'Completed') return task.completed;
     if (filter === 'Active') return !task.completed;
@@ -133,6 +130,8 @@ function App() {
         <TaskForm 
           taskText={taskText} 
           setTaskText={setTaskText} 
+          taskPriority={taskPriority}
+          setTaskPriority={setTaskPriority}
           addTask={addTask} 
           isLoading={isLoading}
         />
@@ -148,6 +147,8 @@ function App() {
             editingTaskId={editingTaskId} 
             setEditingText={setEditingText} 
             editingText={editingText} 
+            editingPriority={editingPriority}
+            setEditingPriority={setEditingPriority}
             saveTask={saveTask} 
             cancelEditing={cancelEditing}
             isLoading={isLoading}

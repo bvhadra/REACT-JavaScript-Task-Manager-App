@@ -1,11 +1,10 @@
-// TaskForm.js
 import React from 'react';
 import '../App.css';
 
-const TaskForm = ({ taskText, setTaskText, addTask }) => {
+const TaskForm = ({ taskText, setTaskText, taskPriority, setTaskPriority, addTask, isLoading }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
-    addTask(); // Add new task
+    addTask();
   };
 
   return (
@@ -14,11 +13,21 @@ const TaskForm = ({ taskText, setTaskText, addTask }) => {
         <input
           type="text"
           value={taskText}
-          onChange={(e) => setTaskText(e.target.value)} // Handle new task text
+          onChange={(e) => setTaskText(e.target.value)}
           placeholder="Add a new task"
           required
         />
-        <button type="submit">Add</button>
+        <select
+          value={taskPriority}
+          onChange={(e) => setTaskPriority(e.target.value)}
+        >
+          <option value="Low">Low</option>
+          <option value="Medium">Medium</option>
+          <option value="High">High</option>
+        </select>
+        <button type="submit" disabled={isLoading}>
+          {isLoading ? 'Adding...' : 'Add'}
+        </button>
       </form>
     </div>
   );
