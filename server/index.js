@@ -8,18 +8,10 @@ const path = require('path');
 const app = express();
 const port = process.env.PORT || 5000;
 
-/*
-const pool = new Pool({
-  connectionString: process.env.DATABASE_URL,
-  ssl: { rejectUnauthorized: false }
-});
-*/
-
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
   ssl: process.env.NODE_ENV === 'production' ? { rejectUnauthorized: false } : false
 });
-
 
 async function initializeDatabase() {
   try {
@@ -41,7 +33,10 @@ initializeDatabase();
 
 app.use(bodyParser.json());
 app.use(cors({
-  origin: process.env.FRONTEND_URL || 'https://react-javascript-task-manager-8032db552129.herokuapp.com',
+  origin: [
+    'https://react-javascript-task-manager-8032db552129.herokuapp.com',
+    'http://localhost:3000'
+  ],
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   allowedHeaders: ['Content-Type', 'Authorization']
 }));

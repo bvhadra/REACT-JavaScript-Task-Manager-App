@@ -1,7 +1,17 @@
 import React from 'react';
 import '../App.css';
 
-function TaskItem({ task, deleteTask, startEditing, toggleCompletion, editingTaskId, editingText, setEditingText, saveTask, cancelEditing }) {
+function TaskItem({ 
+  task, 
+  deleteTask, 
+  startEditing, 
+  toggleCompletion, 
+  editingTaskId, 
+  editingText, 
+  setEditingText, 
+  saveTask, 
+  cancelEditing 
+}) {
   const isEditing = editingTaskId === task.id;
 
   return (
@@ -12,11 +22,15 @@ function TaskItem({ task, deleteTask, startEditing, toggleCompletion, editingTas
           checked={task.completed} 
           onChange={() => toggleCompletion(task.id)} 
         />
+        <span className={`task-priority ${task.priority.toLowerCase()}`}>
+          {task.priority}
+        </span>
         {isEditing ? (
           <input 
             type="text" 
             value={editingText} 
             onChange={(e) => setEditingText(e.target.value)} 
+            className="editing-input"
           />
         ) : (
           <span className="task-text">{task.text}</span>

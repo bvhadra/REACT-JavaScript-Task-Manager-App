@@ -113,15 +113,40 @@
   text-align: left;
 }
 
+/* Styles for the editing input */
+.editing-input {
+  flex: 1;
+  padding: 8px;
+  border: 2px solid #007bff; /* Blue border */
+  border-radius: 3px;
+  background-color: #e6f2ff; /* Light blue background */
+  color: #007bff; /* Blue text color */
+  font-size: 16px;
+  outline: none; /* Remove default focus outline */
+  transition: all 0.3s ease; /* Smooth transition for hover/focus effects */
+  margin-right: 10px;
+}
+
+.editing-input:focus {
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); /* Blue glow on focus */
+}
+
+
+/* Update the existing styles for .task-item */
 .task-item {
   display: flex;
-  justify-content: space-between; /* Aligns items in the container */
+  justify-content: space-between;
   align-items: center;
   background-color: #fff;
   padding: 10px;
   border-radius: 5px;
   margin-bottom: 10px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.3s ease; /* Smooth transition for hover effect */
+}
+
+.task-item:hover {
+  background-color: #f8f9fa; /* Light grey background on hover */
 }
 
 /* Flexbox for checkbox and task text */
@@ -180,6 +205,33 @@
   border: 1px solid #ccc;
   border-radius: 3px;
 }
+
+
+/* Priority indicator styles */
+.task-priority {
+  margin-right: 15px;
+  padding: 2px 6px;
+  border-radius: 3px;
+  font-size: 0.8em;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+.task-priority.low {
+  background-color: #8bc34a;
+  color: white;
+}
+
+.task-priority.medium {
+  background-color: #ffc107;
+  color: black;
+}
+
+.task-priority.high {
+  background-color: #f44336;
+  color: white;
+}
+
 
 /* Mobile Styles (max-width: 600px) */
 @media (max-width: 600px) {
