@@ -1,5 +1,6 @@
 # REACT Task Manager App
-<b>Task Manager App</b>
+
+<h3><a href="https://react-javascript-task-manager-8032db552129.herokuapp.com">https://react-javascript-task-manager-8032db552129.herokuapp.com</a></h3>
 
 <b>Overview:</b>
 
@@ -10,6 +11,7 @@ Task Manager App is a full-stack web application designed to help users manage t
 1. Task Management
 
 - Add Task: Easily add new tasks to your to-do list using the intuitive task form.
+- Edit Task: Easily edit any task and save.
 - Update Task Status: Mark tasks as completed or active by toggling their completion status.
 - Delete Task: Remove tasks you no longer need, keeping your task list organized.
 
@@ -45,5 +47,6 @@ This project serves as an excellent example of a full-stack web application, sho
 - Task Prioritization: Allow users to prioritize tasks to better manage their workload.
 - Task Categories: Introduce categories or labels to help users organize tasks more effectively.
 
-<b>See the project code here:</b>  https://github.com/bvhadra/task-manager-app/tree/main
+<h3>Try the app here: <a href="https://react-javascript-task-manager-8032db552129.herokuapp.com">https://react-javascript-task-manager-8032db552129.herokuapp.com</a></h3>
+
 
